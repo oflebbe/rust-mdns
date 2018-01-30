@@ -2,14 +2,13 @@ use net2::UdpBuilder;
 use net2::unix::UnixUdpBuilderExt;
 use std::io;
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, UdpSocket};
-use super::MDNS_PORT;
 
 pub enum Inet {}
 pub enum Inet6 {}
 
 pub trait AddressFamily {
     fn bind() -> io::Result<UdpSocket> {
-        let addr = SocketAddr::new(Self::any_addr(), MDNS_PORT);
+        let addr = SocketAddr::new(Self::any_addr(), super::Responder::get_port());
         let socket = Self::socket_builder()?
             .reuse_address(true)?
             .reuse_port(true)?
