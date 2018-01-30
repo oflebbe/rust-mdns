@@ -3,7 +3,7 @@ use net2::UdpBuilder;
 use net2::unix::UnixUdpBuilderExt;
 use std::io;
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, UdpSocket};
-#[cfg(not(windows))]
+#[cfg(target_os = "linux")]
 use libc;
 
 pub enum Inet {}
