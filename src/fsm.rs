@@ -9,7 +9,7 @@ use futures::sync::mpsc;
 use tokio::net::UdpSocket;
 use tokio::reactor::Handle;
 
-use super::{DEFAULT_TTL, MDNS_PORT};
+use super::DEFAULT_TTL;
 use address_family::AddressFamily;
 use net;
 use services::{Services, ServiceData};
@@ -110,7 +110,7 @@ impl <AF: AddressFamily> FSM<AF> {
 
         if !multicast_builder.is_empty() {
             let response = multicast_builder.build().unwrap_or_else(|x| x);
-            let addr = SocketAddr::new(AF::mdns_group(), MDNS_PORT);
+            let addr = SocketAddr::new(AF::mdns_group(), super::Responder::get_port());
             self.outgoing.push_back((response, addr));
         }
 
@@ -189,7 +189,7 @@ impl <AF: AddressFamily> FSM<AF> {
 
         if !builder.is_empty() {
             let response = builder.build().unwrap_or_else(|x| x);
-            let addr = SocketAddr::new(AF::mdns_group(), MDNS_PORT);
+            let addr = SocketAddr::new(AF::mdns_group(), super::Responder::get_port());
             self.outgoing.push_back((response, addr));
         }
     }

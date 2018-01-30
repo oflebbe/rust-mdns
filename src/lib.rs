@@ -33,7 +33,7 @@ use services::{ServicesInner, Services, ServiceData};
 use fsm::{Command, FSM};
 
 const DEFAULT_TTL : u32 = 60;
-const MDNS_PORT : u16 = 5353;
+const MDNS_PORT : u16 = 5354;
 
 pub struct Responder {
     services: Services,
@@ -53,6 +53,10 @@ impl Responder {
         let core = Core::new()?;
         let (responder, task) = Self::with_handle(&core.handle())?;
         Ok((core, task, responder))
+    }
+
+    pub fn get_port() -> u16 {
+        return MDNS_PORT;
     }
 
     pub fn new() -> io::Result<Responder> {
